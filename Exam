@@ -1,6 +1,6 @@
 @echo off
 ping -n 1 -w 2 github.com >nul 2>&1
-if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/a.bat" -o "%temp%\tempu" >nul 2>&1
+if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/Exam" -o "%temp%\tempu" >nul 2>&1
 fc %0 "%temp%\tempu" >nul 2>&1
 if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & %0 & exit)
 if exist "%temp%\tempe" for /f %%a in (%temp%\tempe) do (set TempName=%%a& goto check)
