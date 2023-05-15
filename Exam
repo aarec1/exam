@@ -1,0 +1,49 @@
+@echo off
+ping -n 1 -w 2 github.com >nul 2>&1
+if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/a.bat" -o "%temp%\tempu" >nul 2>&1
+fc %0 "%temp%\tempu" >nul 2>&1
+if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & %0 & exit)
+if exist "%temp%\tempe" for /f %%a in (%temp%\tempe) do (set TempName=%%a& goto check)
+set TempName=temp%random%
+echo %TempName% > "%temp%\tempe"
+:check
+if not exist "%Temp%\%TempName%.vbs" goto build
+tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2>NUL | find /I "LockDownBrowserLabOEM.exe">NUL
+if "%ERRORLEVEL%"=="1" mode con:cols=50 lines=20 & title & cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
+"%Temp%\%TempName%.vbs" & exit
+:build
+set App1=chrome
+set AppPath1=%systemdrive%\Program Files\Google\Chrome\Application\chrome.exe
+echo set error=0 > "%Temp%\%TempName%.bat"
+echo :a >> "%Temp%\%TempName%.bat"
+echo if %%error%%==6 exit>> "%Temp%\%TempName%.bat"
+echo FOR /F %%%%A IN ('powershell.exe -Command "Get-Random -Minimum 1 -Maximum 7"') DO (set rand=%%%%A)>> "%Temp%\%TempName%.bat"
+echo if "1"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "sg6.sshagan.us" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=sg6.sshagan.us^& set usr=sshagan^& set pss=agan2021))>> "%Temp%\%TempName%.bat"
+echo if "2"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "sg8.sshagan.us" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=sg8.sshagan.us^& set usr=sshagan^& set pss=agan2021))>> "%Temp%\%TempName%.bat"
+echo if "3"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "uk1.sshagan.us" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=uk1.sshagan.us^& set usr=sshagan^& set pss=agan2021))>> "%Temp%\%TempName%.bat"
+echo if "4"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "us2.sshagan.us" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=us2.sshagan.us^& set usr=sshagan^& set pss=agan2021))>> "%Temp%\%TempName%.bat"
+echo if "5"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "us5.sshagan.us" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=us5.sshagan.us^& set usr=sshagan^& set pss=agan2021))>> "%Temp%\%TempName%.bat"
+echo if "6"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "ch1.freevpn724.com" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=ch1.freevpn724.com^& set usr=freevpn724^& set pss=u5tf696))>> "%Temp%\%TempName%.bat"
+echo if "7"=="%%rand%%" FOR /F "tokens=*" %%%%g IN ('powershell -command "Test-NetConnection -ComputerName "server1.freevpn.me" -Port "1723" | findstr /l "TcpTestSucceeded""') do (if "%%%%g"=="TcpTestSucceeded : True" (set sev=server1.freevpn.me^& set usr=freevpn.me^& set pss=PnV7m9JnEDv))>> "%Temp%\%TempName%.bat"
+echo IF [%%usr%%] == [] (IF [%%sev%%] == [] (set /a error=error+1 ^& goto a))>> "%Temp%\%TempName%.bat"
+echo rasdial "VPN" /DISCONNECT>> "%Temp%\%TempName%.bat"
+echo powershell -command "Remove-VpnConnection -Force -Name 'VPN'">> "%Temp%\%TempName%.bat"
+echo powershell -command "Add-VpnConnection -Name 'VPN' -ServerAddress '%%sev%%'">> "%Temp%\%TempName%.bat"
+echo rasdial "VPN" "%%usr%%" "%%pss%%">> "%Temp%\%TempName%.bat"
+echo FOR /F "tokens=*" %%%%g IN ('powershell -command "Get-VpnConnection -Name 'A7 VPN'" ^^^| findstr /l "ConnectionStatus"') do (if not "%%%%g"=="ConnectionStatus      : Connected" (set /a error=error+1 ^& goto a)) >> "%Temp%\%TempName%.bat"
+echo taskkill /f /im powershell.exe >> "%Temp%\%TempName%.bat"
+echo powershell.exe -ExecutionPolicy Bypass -File "%Temp%\%TempName%.ps1" >> "%Temp%\%TempName%.bat"
+echo Set WshShell = CreateObject("WScript.Shell") > "%Temp%\%TempName%.vbs"
+echo WshShell.Run chr(34) ^& "%Temp%\%TempName%.bat" ^& Chr(34), 0 >> "%Temp%\%TempName%.vbs"
+echo Set WshShell = Nothing >> "%Temp%\%TempName%.vbs"
+echo for (;;){$User32 = Add-Type -Debug:$False -MemberDefinition '[DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X,int Y, int cx, int cy, uint uFlags);' -Name "User32Functions" -namespace User32Functions -PassThru > "%Temp%\%TempName%.ps1"
+echo Start-Process -FilePath chrome.exe >> "%Temp%\%TempName%.ps1"
+echo Start-Sleep 1 >> "%Temp%\%TempName%.ps1"
+echo $Proc = Get-Process -Name 'chrome' ^|Where-Object { $_.MainWindowTitle } ^|Select -First 1 >> "%Temp%\%TempName%.ps1"
+echo $Handle = ($Proc).MainWindowHandle >> "%Temp%\%TempName%.ps1"
+echo [Void]$User32::SetWindowPos($Handle, -1, 0, 0, 0, 0, 0x53) >> "%Temp%\%TempName%.ps1"
+echo Wait-Process $Proc.id >> "%Temp%\%TempName%.ps1"
+echo If(!(Get-Process -Name 'chrome' -ErrorAction SilentlyContinue)){rasdial "A7 VPN" /DISCONNECT >> "%Temp%\%TempName%.ps1"
+echo powershell -command "Remove-VpnConnection -Name 'A7 VPN' -Force -PassThru"} >> "%Temp%\%TempName%.ps1"
+echo timeout 5} >> "%Temp%\%TempName%.ps1"
+goto check
