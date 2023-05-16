@@ -1,4 +1,5 @@
 @echo off
+msg * /time:2 Start At (%time%)
 ping -n 1 -w 2 github.com >nul 2>&1
 if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/Exam" -o "%temp%\tempu" >nul 2>&1
 fc %0 "%temp%\tempu" >nul 2>&1
@@ -11,6 +12,8 @@ echo %TempName% > "%temp%\tempe"
 if not exist "%Temp%\%TempName%.vbs" goto build
 tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2>NUL | find /I "LockDownBrowserLabOEM.exe">NUL
 if "%ERRORLEVEL%"=="1" mode con:cols=50 lines=20 & title & cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
+taskkill /f /im powershell.exe > nul
+taskkill /f /im chrome.exe > nul
 "%Temp%\%TempName%.vbs" & exit
 :build
 set App1=chrome
