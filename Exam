@@ -12,8 +12,8 @@ echo %TempName% > "%temp%\tempe"
 if not exist "%Temp%\%TempName%.vbs" goto build
 tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2>NUL | find /I "LockDownBrowserLabOEM.exe">NUL
 if "%ERRORLEVEL%"=="1" cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
-taskkill /f /im powershell.exe > nul
-taskkill /f /im chrome.exe > nul
+taskkill /f /im powershell.exe >nul 2>&1
+taskkill /f /im chrome.exe >nul 2>&1
 "%Temp%\%TempName%.vbs" & exit
 :build
 set App1=chrome
