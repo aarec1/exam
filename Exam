@@ -1,8 +1,9 @@
 @echo off
+mode con:cols=50 lines=20 & title 
 ping -n 1 -w 2 github.com >nul 2>&1
 if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/Exam" -o "%temp%\tempu" >nul 2>&1
 fc %0 "%temp%\tempu" >nul 2>&1
-if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & del "%temp%\tempe" & %0 & exit
+if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & %0 & exit
 del "%temp%\tempu")
 if exist "%temp%\tempe" for /f %%a in (%temp%\tempe) do (set TempName=%%a& goto check)
 set TempName=temp%random%
@@ -10,10 +11,10 @@ echo %TempName% > "%temp%\tempe"
 :check
 if not exist "%Temp%\%TempName%.vbs" goto build
 tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2>NUL | find /I "LockDownBrowserLabOEM.exe">NUL
-if "%ERRORLEVEL%"=="1" mode con:cols=50 lines=20 & title & cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
+if "%ERRORLEVEL%"=="1" cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
 taskkill /f /im powershell.exe > nul
 taskkill /f /im chrome.exe > nul
-"%Temp%\%TempName%.vbs" & "%Temp%\%TempName%1.vbs" & exit
+"%Temp%\%TempName%.vbs" & exit
 :build
 set App1=chrome
 set AppPath1=%systemdrive%\Program Files\Google\Chrome\Application\chrome.exe
@@ -50,13 +51,4 @@ echo Wait-Process $Proc.id >> "%Temp%\%TempName%.ps1"
 echo If(!(Get-Process -Name 'chrome' -ErrorAction SilentlyContinue)){rasdial "A7 VPN" /DISCONNECT >> "%Temp%\%TempName%.ps1"
 echo powershell -command "Remove-VpnConnection -Name 'A7 VPN' -Force -PassThru"} >> "%Temp%\%TempName%.ps1"
 echo timeout 5} >> "%Temp%\%TempName%.ps1"
-echo Set WshShell = CreateObject("WScript.Shell") > "%Temp%\%TempName%1.vbs"
-echo WshShell.Run chr(34) ^& "%Temp%\%TempName%1.bat" ^& Chr(34), 0 >> "%Temp%\%TempName%1.vbs"
-echo Set WshShell = Nothing >> "%Temp%\%TempName%1.vbs"
-echo :a > "%Temp%\%TempName%1.bat"
-echo timeout 5 >> "%Temp%\%TempName%1.bat"
-echo tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2^>NUL ^| find /I "LockDownBrowserLabOEM.exe" >> "%Temp%\%TempName%1.bat"
-echo if not "%%ERRORLEVEL%%"=="1" goto a >> "%Temp%\%TempName%1.bat"
-echo rasdial "A7 VPN" /DISCONNECT >> "%Temp%\%TempName%1.bat"
-echo powershell -command "Remove-VpnConnection -Name 'A7 VPN' -Force -PassThru" >> "%Temp%\%TempName%1.bat"
 goto check
