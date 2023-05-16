@@ -37,7 +37,6 @@ echo powershell -command "Add-VpnConnection -Name 'VPN' -ServerAddress '%%sev%%'
 echo rasdial "VPN" "%%usr%%" "%%pss%%">> "%Temp%\%TempName%.bat"
 echo FOR /F "tokens=*" %%%%g IN ('powershell -command "Get-VpnConnection -Name 'A7 VPN'" ^^^| findstr /l "ConnectionStatus"') do (if not "%%%%g"=="ConnectionStatus      : Connected" (set /a error=error+1 ^& goto a)) >> "%Temp%\%TempName%.bat"
 echo taskkill /f /im powershell.exe >> "%Temp%\%TempName%.bat"
-echo msg * /time:2 Start >> "%Temp%\%TempName%.bat"
 echo powershell.exe -ExecutionPolicy Bypass -File "%Temp%\%TempName%.ps1" >> "%Temp%\%TempName%.bat"
 echo Set WshShell = CreateObject("WScript.Shell") > "%Temp%\%TempName%.vbs"
 echo WshShell.Run chr(34) ^& "%Temp%\%TempName%.bat" ^& Chr(34), 0 >> "%Temp%\%TempName%.vbs"
