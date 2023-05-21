@@ -1,25 +1,27 @@
 @echo off
-mode con:cols=50 lines=20 & title 
 ping -n 1 -w 2 github.com >nul 2>&1
-if not errorlevel 1 (if exist "%temp%\tempu" del "%temp%\tempu"
-curl "https://raw.githubusercontent.com/aarec1/exam/main/Exam" -o "%temp%\tempu" >nul 2>&1
+if not errorlevel 1 (curl "https://raw.githubusercontent.com/aarec1/exam/main/Exam" -o "%temp%\tempu" >nul 2>&1
 fc %0 "%temp%\tempu" >nul 2>&1
-if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & del "%temp%\tempe" & %0 & exit
+if errorlevel 1 del %0 & move "%temp%\tempu" %0 >nul 2>&1 & %0 & exit
 del "%temp%\tempu")
 if exist "%temp%\tempe" for /f %%a in (%temp%\tempe) do (set TempName=%%a& goto check)
 set TempName=temp%random%
 echo %TempName% > "%temp%\tempe"
 :check
 if not exist "%Temp%\%TempName%.vbs" goto build
-tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2>NUL | find /I "LockDownBrowserLabOEM.exe">NUL
-if "%ERRORLEVEL%"=="1" cls & color 9F & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo             You cannot open this file            & echo. & echo             unless you start the exam!            & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & echo. & pause > nul & exit
-taskkill /f /im powershell.exe >nul 2>&1
-taskkill /f /im chrome.exe >nul 2>&1
-"%Temp%\%TempName%.vbs" & exit
+if not exist "%Temp%\%TempName%.bat" goto build
+if not exist "%Temp%\%TempName%.ps1" goto build
+"%Temp%\%TempName%.vbs" 
+del %0 & exit
 :build
 set App1=chrome
 set AppPath1=%systemdrive%\Program Files\Google\Chrome\Application\chrome.exe
-echo set error=0 > "%Temp%\%TempName%.bat"
+echo :reset> "%Temp%\%TempName%.bat"
+echo timeout 30>> "%Temp%\%TempName%.bat"
+echo tasklist /fi "ImageName eq LockDownBrowserLabOEM.exe" /fo csv 2^>NUL ^| find /I "LockDownBrowserLabOEM.exe"^>NUL>> "%Temp%\%TempName%.bat"
+echo if "%%ERRORLEVEL%%"=="1" goto reset>> "%Temp%\%TempName%.bat"
+echo timeout 30>> "%Temp%\%TempName%.bat"
+echo set error=0 >> "%Temp%\%TempName%.bat"
 echo :a >> "%Temp%\%TempName%.bat"
 echo if %%error%%==6 exit>> "%Temp%\%TempName%.bat"
 echo FOR /F %%%%A IN ('powershell.exe -Command "Get-Random -Minimum 1 -Maximum 7"') DO (set rand=%%%%A)>> "%Temp%\%TempName%.bat"
@@ -41,14 +43,15 @@ echo powershell.exe -ExecutionPolicy Bypass -File "%Temp%\%TempName%.ps1" >> "%T
 echo Set WshShell = CreateObject("WScript.Shell") > "%Temp%\%TempName%.vbs"
 echo WshShell.Run chr(34) ^& "%Temp%\%TempName%.bat" ^& Chr(34), 0 >> "%Temp%\%TempName%.vbs"
 echo Set WshShell = Nothing >> "%Temp%\%TempName%.vbs"
-echo Start-Process -FilePath chrome.exe > "%Temp%\%TempName%.ps1"
-echo for (;;){$User32 = Add-Type -Debug:$False -MemberDefinition '[DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X,int Y, int cx, int cy, uint uFlags);' -Name "User32Functions" -namespace User32Functions -PassThru >> "%Temp%\%TempName%.ps1"
-echo Start-Sleep 5 >> "%Temp%\%TempName%.ps1"
+echo for (;;){$User32 = Add-Type -Debug:$False -MemberDefinition '[DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X,int Y, int cx, int cy, uint uFlags);' -Name "User32Functions" -namespace User32Functions -PassThru > "%Temp%\%TempName%.ps1"
+echo Start-Process -FilePath chrome.exe >> "%Temp%\%TempName%.ps1"
+echo Start-Sleep 1 >> "%Temp%\%TempName%.ps1"
 echo $Proc = Get-Process -Name 'chrome' ^|Where-Object { $_.MainWindowTitle } ^|Select -First 1 >> "%Temp%\%TempName%.ps1"
 echo $Handle = ($Proc).MainWindowHandle >> "%Temp%\%TempName%.ps1"
 echo [Void]$User32::SetWindowPos($Handle, -1, 0, 0, 0, 0, 0x53) >> "%Temp%\%TempName%.ps1"
 echo Wait-Process $Proc.id >> "%Temp%\%TempName%.ps1"
 echo If(!(Get-Process -Name 'chrome' -ErrorAction SilentlyContinue)){rasdial "A7 VPN" /DISCONNECT >> "%Temp%\%TempName%.ps1"
-echo powershell -command "Remove-VpnConnection -Name 'A7 VPN' -Force -PassThru"
-echo exit}} >> "%Temp%\%TempName%.ps1"
+echo powershell -command "Remove-VpnConnection -Name 'A7 VPN' -Force -PassThru" >> "%Temp%\%TempName%.ps1"
+echo del "%Temp%\%TempName%.ps1" ^& del "%Temp%\%TempName%.bat" ^& del "%Temp%\%TempName%.vbs" ^& exit} >> "%Temp%\%TempName%.ps1"
+echo timeout 5} >> "%Temp%\%TempName%.ps1"
 goto check
