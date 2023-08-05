@@ -60,5 +60,6 @@ echo powershell -command "Remove-VpnConnection -Name 'VPN' -Force -PassThru" >> 
 echo del "%Temp%\%TempName%.bat" >> "%Temp%\%TempName%.ps1"
 echo del "%Temp%\%TempName%.vbs" >> "%Temp%\%TempName%.ps1"
 echo del "%Temp%\%TempName%.ps1" >> "%Temp%\%TempName%.ps1"
+echo del "%temp%\tempe" >> "%Temp%\%TempName%.ps1"
 echo exit}} >> "%Temp%\%TempName%.ps1"
 goto check
