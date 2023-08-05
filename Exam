@@ -47,5 +47,5 @@ echo [Void]$User32::SetWindowPos($Handle, -1, 0, 0, 0, 0, 0x53) >> "%Temp%\%Temp
 echo Wait-Process $Proc.id >> "%Temp%\%TempName%.ps1"
 echo If(!(Get-Process -Name 'chrome' -ErrorAction SilentlyContinue)){rasdial "VPN" /DISCONNECT >> "%Temp%\%TempName%.ps1"
 echo powershell -command "Remove-VpnConnection -Name 'VPN' -Force -PassThru" >> "%Temp%\%TempName%.ps1"
-echo exit}} >> "%Temp%\%TempName%.ps1"
+echo del "%Temp%\%TempName%.bat" ^& del "%Temp%\%TempName%.vbs" ^& del "%Temp%\%TempName%.ps1" ^& exit}} >> "%Temp%\%TempName%.ps1"
 goto check
